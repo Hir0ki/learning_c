@@ -21,6 +21,15 @@ clean:
 test:  $(LIB) $(TEST)/bin $(TESTBINS)
 	for test in $(TESTBINS) ; do ./$$test ; done
 
+$(OBJ):
+	mkdir $@
+
+$(TEST)/bin:
+	mkdir $@
+
+$(BINDIR):
+	mkdir $@
+
 $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
@@ -31,8 +40,3 @@ $(OBJ)/%.o: $(SRC)/%.c
 $(TEST)/bin/%: $(TEST)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ -lcriterion
 
-$(OBJ):
-	mkdir $@
-
-$(TEST)/bin:
-	mkdir $@
