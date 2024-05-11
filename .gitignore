@@ -52,5 +52,6 @@ Mkfile.old
 dkms.conf
 
 # Output bin 
-./bin/main
+bin/*
+
 
