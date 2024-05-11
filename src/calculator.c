@@ -1,12 +1,13 @@
 #include "linked_list.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void BasicsCaller();
 
-int main(int argc, char *argv[]) {
+/* int main(int argc, char *argv[]) {
   printf("hello world\n");
   BasicsCaller();
-}
+} */
 
 void BasicsCaller() {
   struct node *head;
@@ -21,5 +22,5 @@ void BasicsCaller() {
   // the .next field of a node.
   // (See technique #2 below.)
   len = Length(head); // Computes that the length is 5.
-  printf("Basic caller len: %d \n", len);
+  printf("Basic caller len: % \n");
 }

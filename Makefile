@@ -9,14 +9,14 @@ CFLAGS=-g -Wall
 BINDIR=bin
 BIN = $(BINDIR)/main
 
-TEST=test
+TEST=tests
 TESTS=$(wildcard $(TEST)/*.c)
-TESTBINS=$(patsubst $(TEST)/%.c, $(TEST)/bin/%.o, $(TESTS))
+TESTBINS=$(patsubst $(TEST)/%.c, $(TEST)/bin/%, $(TESTS))
 
 all:$(BIN)
 
 clean:
-	$(RM) -r $(OBJ)/* $(BINDIR)/*
+	$(RM) -r $(OBJ)/* $(BINDIR)/* $(TEST)/bin/*
 
 test:  $(LIB) $(TEST)/bin $(TESTBINS)
 	for test in $(TESTBINS) ; do ./$$test ; done
@@ -27,7 +27,7 @@ $(OBJ):
 $(TEST)/bin:
 	mkdir $@
 
-$(BINDIR):
+$(BINDIR)/:
 	mkdir $@
 
 $(BIN): $(OBJS)
@@ -38,5 +38,5 @@ $(OBJ)/%.o: $(SRC)/%.c
 
 
 $(TEST)/bin/%: $(TEST)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@ -lcriterion
+	$(CC) $(CFLAGS) $< $(OBJS) -o $@ -lcriterion
 
