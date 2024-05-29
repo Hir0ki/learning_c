@@ -1,6 +1,3 @@
-
-
-CC=clang
 SRC=src
 OBJ=obj
 MAINS=calculator.o
@@ -16,10 +13,12 @@ TESTS=$(wildcard $(TEST)/*.c)
 TEST_OBJS=$(filter-out obj/$(MAINS),$(OBJS))
 TESTBINS=$(patsubst $(TEST)/%.c, $(TEST)/bin/%, $(TESTS))
 
-all:$(BIN)
+.PHONY: all 
+all: $(OBJ) $(TEST) $(BINDIR) $(BIN)
+
 
 clean:
-	$(RM) -r $(OBJ)/* $(BINDIR)/* $(TEST)/bin/*
+	$(RM) -r $(OBJ)/ $(BINDIR)/ $(TEST)/bin/
 
 test:  $(LIB) $(TEST)/bin $(TESTBINS)
 	for test in $(TESTBINS) ; do ./$$test ; done
@@ -30,8 +29,9 @@ $(OBJ):
 $(TEST)/bin:
 	mkdir $@
 
-$(BINDIR)/:
+$(BINDIR):
 	mkdir $@
+
 
 $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
@@ -41,5 +41,4 @@ $(OBJ)/%.o: $(SRC)/%.c
 
 
 $(TEST)/bin/%: $(TEST)/%.c
-	$(CC) $(TESTCFLAGS) -Wl $< $(TEST_OBJS) -o $@ -lcriterion
-
+	$(CC) $(TESTCFLAGS) -Wall $< $(TEST_OBJS) -o $@ -lcriterion
